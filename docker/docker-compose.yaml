@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  todo_db:
+    image: postgres:15.3
+    container_name: "daily-tasks-db"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/create_todo_database.sql:/docker-entrypoint-initdb.d/create_todo_database.sql
+      - ./.postgresql-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=todo
+      - POSTGRES_PASSWORD=smartway
+      - POSTGRES_DB=todo
