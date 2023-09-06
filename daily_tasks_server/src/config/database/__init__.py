@@ -1,1 +1,2 @@
-from .database_interface import DatabaseInterface
+from daily_tasks_server.src.config.database.database_interface import DatabaseInterface
+from daily_tasks_server.src.config.database.database_session import DatabaseSession
