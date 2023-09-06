@@ -1,15 +1,17 @@
 from psycopg2 import connect
 from psycopg2.extensions import connection
 
+from daily_tasks_server.src.config import Config
+
 
 class PostgreSqlConnection:
 
     def __init__(self) -> None:
-        user = "todo"
-        password = "todo"
-        host = "localhost"
-        port = 5432
-        database = "todo"
+        user = Config.DATABASE_USER
+        password = Config.DATABASE_PASSWORD
+        host = Config.DATABASE_HOST
+        port = Config.DATABASE_PORT
+        database = Config.DATABASE_NAME
 
         self.__session = connect(
             dbname=database,
