@@ -9,7 +9,7 @@ from daily_tasks_server.src.services import SendEmailService
 class ActivateUserEmailNotificationService:
 
     @staticmethod
-    async def notify(user: UserSignupModel) -> None:
+    def notify(user: UserSignupModel) -> None:
         payload = {"email": user.email}
         expiration = Config.JWT_ACTIVATE_EMAIL_TOKEN_EXPIRATION
 
