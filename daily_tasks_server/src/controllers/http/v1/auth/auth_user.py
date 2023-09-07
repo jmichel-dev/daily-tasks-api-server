@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, Depends
+from fastapi import APIRouter, status, Depends, BackgroundTasks
 
 from daily_tasks_server.src.models import UserSignupModel
 from daily_tasks_server.src.config.database import DatabaseInterface
@@ -14,10 +14,11 @@ router = APIRouter()
     status_code=status.HTTP_201_CREATED
 )
 async def signup(
+        background_task: BackgroundTasks,
         user: UserSignupModel,
         db: DatabaseInterface = Depends(DatabaseSession)
 ) -> None:
     signup_service = SignupService(db.get_session())
     signup_service.execute(user)
 
-    await ActivateUserEmailNotificationService.notify(user)
+    background_task.add_task(ActivateUserEmailNotificationService.notify, user)
