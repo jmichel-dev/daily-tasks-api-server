@@ -4,7 +4,6 @@ from daily_tasks_server.src.config import Config
 
 
 def hashing(password: str) -> str:
-    print(Config.PASSWORD_SALT)
     password_hash = bcrypt.hashpw(password.encode("utf-8"), Config.PASSWORD_SALT)
     return password_hash.decode("utf-8")
 
