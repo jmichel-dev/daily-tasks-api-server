@@ -1,1 +1,4 @@
 from daily_tasks_server.src.services.auth.signup_service import SignupService
+from daily_tasks_server.src.services.jwt.jwt_service import JWTService
+from daily_tasks_server.src.services.mail.send_email_service import SendEmailService
+from daily_tasks_server.src.services.notification.activate_user_email_notification_service import ActivateUserEmailNotificationService
