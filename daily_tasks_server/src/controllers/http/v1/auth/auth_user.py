@@ -4,6 +4,7 @@ from daily_tasks_server.src.models import UserSignupModel
 from daily_tasks_server.src.config.database import DatabaseInterface
 from daily_tasks_server.src.config.database import DatabaseSession
 from daily_tasks_server.src.services import SignupService
+from daily_tasks_server.src.services import ActivateUserEmailNotificationService
 
 router = APIRouter()
 
@@ -18,4 +19,5 @@ async def signup(
 ) -> None:
     signup_service = SignupService(db.get_session())
     signup_service.execute(user)
-    return
+
+    await ActivateUserEmailNotificationService.notify(user)
