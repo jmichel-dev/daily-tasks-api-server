@@ -28,6 +28,9 @@ archive.zip
 
 # macOS
 .DS_Store
+
+# app
 config.py
 .env
 .postgresql-data
+TODO.md
