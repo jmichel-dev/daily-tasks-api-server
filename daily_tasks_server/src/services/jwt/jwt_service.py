@@ -31,5 +31,5 @@ class JWTService:
         except (jwt.JWTError, jwt.ExpiredSignatureError):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="Could not verify your token"
+                detail="Token invalid"
             )
