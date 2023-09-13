@@ -1,5 +1,6 @@
 import json
 
+from pydantic import EmailStr
 from fastapi import APIRouter, status, Depends, BackgroundTasks
 
 from daily_tasks_server.src.models import UserSignupModel
@@ -9,6 +10,7 @@ from daily_tasks_server.src.services import SignupService
 from daily_tasks_server.src.services import ActivateUserEmailNotificationService
 from daily_tasks_server.src.services import JWTService
 from daily_tasks_server.src.services import ConfirmEmailService
+from daily_tasks_server.src.services import RequestChangePasswordService
 
 router = APIRouter()
 
@@ -43,3 +45,18 @@ async def activate(
     user = payload["payload"]["email"]
     confirm_email_service = ConfirmEmailService(db_session=db.get_session())
     confirm_email_service.execute(user)
+
+
+@router.post(
+    "/change_password",
+    status_code=status.HTTP_200_OK,
+    name="Request change password"
+)
+def change_password_request(
+        background_task: BackgroundTasks,
+        email: EmailStr,
+        db: DatabaseInterface = Depends(DatabaseSession)
+) -> None:
+    change_password_request_service = RequestChangePasswordService(db.get_session())
+
+    change_password_request_service.execute(email, background_task)

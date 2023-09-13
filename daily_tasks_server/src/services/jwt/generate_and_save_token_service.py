@@ -6,7 +6,7 @@ from daily_tasks_server.src.services import JWTService
 
 class GenerateAndSaveTokenService:
 
-    def __init(self, db_session) -> None:
+    def __init__(self, db_session) -> None:
         self.db_session = db_session
 
     def execute(self, email: str) -> str:

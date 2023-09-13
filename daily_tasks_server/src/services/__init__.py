@@ -4,3 +4,7 @@ from daily_tasks_server.src.services.mail.send_email_service import SendEmailSer
 from daily_tasks_server.src.services.notification.activate_user_email_notification_service \
     import ActivateUserEmailNotificationService
 from daily_tasks_server.src.services.auth.confirm_email_service import ConfirmEmailService
+from daily_tasks_server.src.services.jwt.generate_and_save_token_service import GenerateAndSaveTokenService
+from daily_tasks_server.src.services.notification.change_password_request_notification_service \
+    import ChangePasswordRequestNotificationService
+from daily_tasks_server.src.services.auth.request_change_password_service import RequestChangePasswordService
