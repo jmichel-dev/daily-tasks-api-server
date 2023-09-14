@@ -1,9 +1,8 @@
-import json
-
 from pydantic import EmailStr
+from psycopg2.extensions import connection
 from fastapi import APIRouter, status, Depends, BackgroundTasks
 
-from daily_tasks_server.src.models import UserSignupModel
+from daily_tasks_server.src.models import UserSignupModel, ChangePasswordModel
 from daily_tasks_server.src.config.database import DatabaseInterface
 from daily_tasks_server.src.config.database import DatabaseSession
 from daily_tasks_server.src.services import SignupService
@@ -11,6 +10,9 @@ from daily_tasks_server.src.services import ActivateUserEmailNotificationService
 from daily_tasks_server.src.services import JWTService
 from daily_tasks_server.src.services import ConfirmEmailService
 from daily_tasks_server.src.services import RequestChangePasswordService
+from daily_tasks_server.src.services import DisableTokenService
+from daily_tasks_server.src.services import VerityJWTTokenDatabaseService
+from daily_tasks_server.src.services import ChangePasswordByEmailService
 
 router = APIRouter()
 
@@ -60,3 +62,29 @@ def change_password_request(
     change_password_request_service = RequestChangePasswordService(db.get_session())
 
     change_password_request_service.execute(email, background_task)
+
+
+@router.put(
+    "/change_password",
+    status_code=status.HTTP_200_OK,
+    name="Change password"
+)
+def change_password(
+        password_request: ChangePasswordModel,
+        db: DatabaseInterface = Depends(DatabaseSession)
+) -> None:
+    with db.get_session() as session:
+        session: connection = session
+        payload = JWTService.verify(password_request.token)
+        email = payload["payload"]["email"]
+
+        verify_token_service = VerityJWTTokenDatabaseService(session)
+        verify_token_service.execute(password_request.token)
+
+        disable_token_service = DisableTokenService(session)
+        disable_token_service.execute(password_request.token)
+
+        change_password_service = ChangePasswordByEmailService(session)
+        change_password_service.execute(email, password_request.new_password)
+
+        session.commit()

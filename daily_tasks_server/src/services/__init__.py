@@ -8,3 +8,6 @@ from daily_tasks_server.src.services.jwt.generate_and_save_token_service import 
 from daily_tasks_server.src.services.notification.change_password_request_notification_service \
     import ChangePasswordRequestNotificationService
 from daily_tasks_server.src.services.auth.request_change_password_service import RequestChangePasswordService
+from daily_tasks_server.src.services.jwt.disable_token_service import DisableTokenService
+from daily_tasks_server.src.services.jwt.verify_jwt_token_database_service import VerityJWTTokenDatabaseService
+from daily_tasks_server.src.services.auth.change_password_by_email_service import ChangePasswordByEmailService
