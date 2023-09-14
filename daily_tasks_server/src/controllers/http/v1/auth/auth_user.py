@@ -50,7 +50,7 @@ async def activate(
 
 
 @router.post(
-    "/change_password",
+    "/password",
     status_code=status.HTTP_200_OK,
     name="Request change password"
 )
@@ -65,7 +65,7 @@ def change_password_request(
 
 
 @router.put(
-    "/change_password",
+    "/password",
     status_code=status.HTTP_200_OK,
     name="Change password"
 )
