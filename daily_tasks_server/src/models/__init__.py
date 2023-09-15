@@ -1,2 +1,3 @@
 from daily_tasks_server.src.models.auth.user_signup_model import UserSignupModel
 from daily_tasks_server.src.models.auth.change_password_model import ChangePasswordModel
+from daily_tasks_server.src.models.auth.user_response_model import UserResponseModel

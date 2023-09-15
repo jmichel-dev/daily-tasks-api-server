@@ -9,10 +9,13 @@ from daily_tasks_server.src.services import SignupService
 from daily_tasks_server.src.services import ActivateUserEmailNotificationService
 from daily_tasks_server.src.services import JWTService
 from daily_tasks_server.src.services import ConfirmEmailService
-from daily_tasks_server.src.services import RequestChangePasswordService
+from daily_tasks_server.src.services import ChangePasswordRequestNotificationService
 from daily_tasks_server.src.services import DisableTokenService
 from daily_tasks_server.src.services import VerityJWTTokenDatabaseService
 from daily_tasks_server.src.services import ChangePasswordByEmailService
+from daily_tasks_server.src.services import SearchUserByEmail
+from daily_tasks_server.src.services import GenerateAndSaveTokenService
+
 
 router = APIRouter()
 
@@ -59,9 +62,14 @@ def change_password_request(
         email: EmailStr,
         db: DatabaseInterface = Depends(DatabaseSession)
 ) -> None:
-    change_password_request_service = RequestChangePasswordService(db.get_session())
+    with db.get_session() as session:
+        search_user_by_email_service = SearchUserByEmail(session)
+        generate_token_service = GenerateAndSaveTokenService(session)
+        
+        token = generate_token_service.execute(email)
+        user = search_user_by_email_service.execute(email)
 
-    change_password_request_service.execute(email, background_task)
+        background_task.add_task(ChangePasswordRequestNotificationService.notify, token, user)
 
 
 @router.put(

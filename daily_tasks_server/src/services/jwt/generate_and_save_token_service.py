@@ -21,10 +21,8 @@ class GenerateAndSaveTokenService:
 
         data = (token, created_at)
 
-        with self.db_session as session:
-            cursor = session.cursor()
-            cursor.execute(sql, data)
-            session.commit()
+        cursor = self.db_session.cursor()
+        cursor.execute(sql, data)
 
         return token
 
