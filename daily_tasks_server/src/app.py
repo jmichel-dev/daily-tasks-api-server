@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from daily_tasks_server.src.config import Config
-from daily_tasks_server.src.controllers.http.router import api_router
+from daily_tasks_server.src.routes.http.router import api_router
 
 
 def create_app() -> FastAPI:
