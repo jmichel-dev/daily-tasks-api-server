@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 
 class UserResponseModel(BaseModel):
+
     uid: str
     first_name: str
     last_name: str
