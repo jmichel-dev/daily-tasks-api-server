@@ -2,7 +2,7 @@ from typing import Annotated
 
 from pydantic import EmailStr
 from fastapi import APIRouter, status, Depends, BackgroundTasks
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 
 from daily_tasks_server.src.controllers.auth.change_password_controller import ChangePasswordController
 from daily_tasks_server.src.controllers.auth.change_password_request_controller import ChangePasswordRequestController
