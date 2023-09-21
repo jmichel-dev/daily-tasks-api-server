@@ -22,24 +22,20 @@ class LoginUserController:
                 detail="Email/password invalid"
             )
 
-        refresh_token_payload = {
+        token_payload = {
             "email": login_request.email
         }
 
         refresh_token = JWTService.generate(
-            payload=refresh_token_payload,
+            payload=token_payload,
             expiration=Config.JWT_REFRESH_TOKEN_EXPIRATION
         )
 
         search_user_service = SearchUserByEmail(db)
         user = search_user_service.execute(login_request.email)
 
-        access_token_payload = {
-            "data": user.model_dump(mode="json")
-        }
-
         access_token = JWTService.generate(
-            payload=access_token_payload,
+            payload=token_payload,
             expiration=Config.JWT_ACCESS_TOKEN_EXPIRATION
         )
 

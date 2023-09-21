@@ -1,5 +1,8 @@
+from typing import Annotated
+
 from pydantic import EmailStr
 from fastapi import APIRouter, status, Depends, BackgroundTasks
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from daily_tasks_server.src.controllers.auth.change_password_controller import ChangePasswordController
 from daily_tasks_server.src.controllers.auth.change_password_request_controller import ChangePasswordRequestController
@@ -17,16 +20,17 @@ router = APIRouter()
 
 
 @router.post(
-    "/login",
+    "/token",
     status_code=status.HTTP_200_OK,
     response_model=LoginResponseModel,
     name="Log in user"
 )
 async def login(
-        login_request: LoginRequestModel,
+        form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
         db: DatabaseInterface = Depends(DatabaseSession)
 ) -> LoginResponseModel:
     with db.get_session() as session:
+        login_request = LoginRequestModel(email=form_data.username, password=form_data.password)
         return LoginUserController.execute(login_request, session)
 
 
