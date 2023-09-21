@@ -13,6 +13,20 @@ CREATE TABLE IF NOT EXISTS person(
     updated_at timestamp default CURRENT_TIMESTAMP not null
 );
 
+CREATE TABLE IF NOT EXISTS role(
+    id uuid DEFAULT gen_random_uuid()  PRIMARY KEY,
+    role VARCHAR(30)  NOT NULL,
+    description TEXT
+);
+
+CREATE TABLE IF NOT EXISTS person_roles(
+    id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    person_id uuid not null,
+    role_id uuid not null,
+    FOREIGN KEY (person_id) REFERENCES person(id)
+    FOREIGN KEY (role_id) REFERENCES role(id)
+);
+
 CREATE TABLE IF NOT EXISTS tokens(
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     token VARCHAR NOT NULL,
