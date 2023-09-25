@@ -16,7 +16,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token")
 
 def get_current_user(
     token: Annotated[str, Depends(oauth2_scheme)],
-    db: DatabaseInterface = Depends(DatabaseSession)
+    db: Annotated[DatabaseInterface, Depends(DatabaseSession)]
 ) -> UserResponseModel:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
