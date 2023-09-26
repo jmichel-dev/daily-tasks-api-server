@@ -20,3 +20,7 @@ class ProjectRequest(BaseModel):
 
 class ProjectsResponse(BaseModel):
     objects: List[ProjectResponse]
+
+
+class ProjectUpdateRequest(ProjectRequest):
+    ...

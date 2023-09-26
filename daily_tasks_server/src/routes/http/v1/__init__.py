@@ -19,6 +19,6 @@ router.include_router(
 
 router.include_router(
     projects_router.router,
-    prefix="/projects",
-    tags=["projects"]
+    prefix="/project",
+    tags=["project"]
 )
