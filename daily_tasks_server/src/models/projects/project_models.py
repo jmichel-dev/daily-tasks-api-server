@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 from pydantic import BaseModel
@@ -16,3 +16,7 @@ class ProjectResponse(BaseModel):
 class ProjectRequest(BaseModel):
     title: str
     description: Optional[str]
+
+
+class ProjectsResponse(BaseModel):
+    objects: List[ProjectResponse]
