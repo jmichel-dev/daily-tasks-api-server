@@ -3,6 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, status, Depends, HTTPException
 
 from daily_tasks_server.src.config.authentication import get_current_active_user
+from daily_tasks_server.src.controllers.project.delete_project_by_id_controller import DeleteProjectByIdController
 from daily_tasks_server.src.controllers.project.get_project_by_id_controller import GetProjectByIdController
 from daily_tasks_server.src.controllers.project.lst_projects_by_owner_controller import ListProjectsByOwnerController
 from daily_tasks_server.src.controllers.project.update_project_service import UpdateProjectController
@@ -63,3 +64,15 @@ def update_project(
         current_user: Annotated[UserResponseModel, Depends(get_current_active_user)],
 ) -> ProjectResponse:
     return UpdateProjectController.execute(current_user, project_id, project_request)
+
+
+@router.delete(
+    "/{project_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    name="Delete project"
+)
+def delete_project(
+        project_id: str,
+        current_user: Annotated[UserResponseModel, Depends(get_current_active_user)],
+) -> None:
+    return DeleteProjectByIdController.execute(current_user.uid, project_id)
