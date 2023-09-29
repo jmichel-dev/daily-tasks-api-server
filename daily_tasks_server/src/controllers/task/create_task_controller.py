@@ -1,7 +1,7 @@
 from daily_tasks_server.src.config.database import DatabaseSession
 from daily_tasks_server.src.models.auth.user_response_model import UserResponseModel
 from daily_tasks_server.src.models.task.task_model import TaskRequest, TaskResponse
-from daily_tasks_server.src.services.user.create_task_service import CreateTaskService
+from daily_tasks_server.src.services.task.create_task_service import CreateTaskService
 
 
 class CreateTaskController:
