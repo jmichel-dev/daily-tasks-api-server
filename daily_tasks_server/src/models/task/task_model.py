@@ -26,7 +26,6 @@ class TaskRequest(BaseModel):
     priority: TaskPriority = TaskPriority.Normal
     start_date: Optional[datetime]
     end_date: Optional[datetime]
-    project_id: str
 
 
 class TaskResponse(TaskRequest):
