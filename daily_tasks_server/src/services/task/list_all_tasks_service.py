@@ -20,17 +20,18 @@ class ListAllTasksService:
         cursor.close()
 
         for row in result:
-            task = TaskResponse()
-            task.id = row[0]
-            task.title = row[1]
-            task.description = row[2]
-            task.status = row[3]
-            task.priority = row[4]
-            task.start_date = row[5]
-            task.end_date = row[6]
-            task.created_at = row[7]
-            task.updated_at = row[8]
-            task.project_id = row[9]
+            task = TaskResponse(
+                id=row[0],
+                title=row[1],
+                description=row[2],
+                status=row[3],
+                priority=row[4],
+                start_date=row[5],
+                end_date=row[6],
+                created_at=row[7],
+                updated_at=row[8],
+                project_id=project_id,
+            )
 
             tasks.append(task)
 

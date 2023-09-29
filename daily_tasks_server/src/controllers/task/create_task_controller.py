@@ -13,4 +13,7 @@ class CreateTaskController:
         with database_session.get_session() as session:
             create_task_service = CreateTaskService(session)
 
-            return create_task_service.execute(project_id, task_request)
+            task = create_task_service.execute(project_id, task_request)
+            session.commit()
+
+            return task

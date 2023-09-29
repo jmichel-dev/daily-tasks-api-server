@@ -27,8 +27,6 @@ class CreateTaskService:
 
         row = cursor.fetchone()
 
-        print(row)
-
         return TaskResponse(
             id=row[0],
             title=row[1],
@@ -41,4 +39,3 @@ class CreateTaskService:
             updated_at=row[8],
             project_id=project_id,
         )
-
