@@ -1,10 +1,9 @@
 from typing import Annotated
 
-from psycopg2.extensions import connection
-from fastapi import APIRouter, status, Depends
+from fastapi import APIRouter, status, Depends, HTTPException
 
 from daily_tasks_server.src.config.authentication import get_current_active_user
-from daily_tasks_server.src.config.database import DatabaseInterface, DatabaseSession
+from daily_tasks_server.src.controllers.project.get_project_by_id_controller import GetProjectByIdController
 from daily_tasks_server.src.controllers.project.lst_projects_by_owner_controller import ListProjectsByOwnerController
 from daily_tasks_server.src.controllers.project.update_project_service import UpdateProjectController
 from daily_tasks_server.src.models.auth.user_response_model import UserResponseModel
@@ -19,10 +18,24 @@ router = APIRouter()
 @router.get(
     "",
     status_code=status.HTTP_200_OK,
-    response_model=ProjectsResponse
+    response_model=ProjectsResponse,
+    name="List projects by user"
 )
 def list_projects(current_user: Annotated[UserResponseModel, Depends(get_current_active_user)]) -> ProjectsResponse:
     return ListProjectsByOwnerController.execute(current_user)
+
+
+@router.get(
+    "/{project_id}",
+    status_code=status.HTTP_200_OK,
+    response_model=ProjectResponse,
+    name="Get project by id and user"
+)
+def list_projects(
+        project_id: str,
+        current_user: Annotated[UserResponseModel, Depends(get_current_active_user)]
+) -> ProjectResponse:
+    return GetProjectByIdController.execute(current_user.uid, project_id)
 
 
 @router.post(

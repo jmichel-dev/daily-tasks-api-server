@@ -34,3 +34,4 @@ config.py
 .env
 .postgresql-data
 TODO.md
+notes.txt
