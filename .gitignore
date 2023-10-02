@@ -30,7 +30,6 @@ archive.zip
 .DS_Store
 
 # app
-config.py
 .env
 .postgresql-data
 TODO.md
