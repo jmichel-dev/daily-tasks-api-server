@@ -43,7 +43,7 @@ def create_task(
 def list_task(
         project_id: str,
         task_id: str,
-        current_user: Annotated[UserResponseModel, Depends(get_current_active_user)],
+        _: Annotated[UserResponseModel, Depends(get_current_active_user)],
 ) -> TaskResponse:
     return ListTaskByIdController.execute(project_id, task_id)
 
@@ -56,6 +56,6 @@ def update_task(
         project_id: str,
         task_id: str,
         task_request: TaskRequest,
-        current_user: Annotated[UserResponseModel, Depends(get_current_active_user)],
+        _: Annotated[UserResponseModel, Depends(get_current_active_user)],
 ) -> TaskResponse:
     return UpdateTaskController.execute(project_id, task_id, task_request)
