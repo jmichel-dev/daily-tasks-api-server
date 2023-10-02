@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends
 from daily_tasks_server.src.config.authentication import get_current_active_user
 from daily_tasks_server.src.controllers.task.create_task_controller import CreateTaskController
 from daily_tasks_server.src.controllers.task.list_all_tasks_controller import ListAllTasksController
+from daily_tasks_server.src.controllers.task.list_task_by_id_controller import ListTaskByIdController
 from daily_tasks_server.src.models.auth.user_response_model import UserResponseModel
 from daily_tasks_server.src.models.task.task_model import TasksResponse, TaskResponse, TaskRequest
 
@@ -32,3 +33,15 @@ def create_task(
         current_user: Annotated[UserResponseModel, Depends(get_current_active_user)],
 ) -> TaskResponse:
     return CreateTaskController.execute(project_id, current_user, task_request)
+
+
+@router.get(
+    "/{project_id}/task/{task_id}",
+    response_model=TaskResponse
+)
+def list_task(
+        project_id: str,
+        task_id: str,
+        current_user: Annotated[UserResponseModel, Depends(get_current_active_user)],
+) -> TaskResponse:
+    return ListTaskByIdController.execute(project_id, task_id)
