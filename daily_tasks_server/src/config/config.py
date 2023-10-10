@@ -10,6 +10,11 @@ class Config:
     APP_HOST = "localhost"
     APP_API_ROUTE = "/api"
 
+    CORS_ORIGIN_ALLOWED = ["*"]
+    CORS_CREDENTIALS = True
+    CORS_METHODS_ALLOWED = ["*"]
+    CORS_HEADERS_ALLOWED = ["*"]
+
     PASSWORD_SALT = bytes(os.getenv("PASSWORD_HASH", "changeme"), "utf-8")
     PASSWORD_MIN_LENGTH = 8
 
