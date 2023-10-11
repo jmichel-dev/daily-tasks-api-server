@@ -7,6 +7,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from daily_tasks_server.src.controllers.auth.change_password_controller import ChangePasswordController
 from daily_tasks_server.src.controllers.auth.change_password_request_controller import ChangePasswordRequestController
 from daily_tasks_server.src.controllers.auth.login_user_controller import LoginUserController
+from daily_tasks_server.src.controllers.auth.refresh_token_controller import RefreshTokenController
 from daily_tasks_server.src.models import UserSignupModel, ChangePasswordModel
 from daily_tasks_server.src.models.auth.login_request_response_model import LoginResponseModel, LoginRequestModel
 from daily_tasks_server.src.config.database import DatabaseInterface
@@ -14,7 +15,7 @@ from daily_tasks_server.src.config.database import DatabaseSession
 
 from daily_tasks_server.src.controllers.auth.signup_controller import SignupController
 from daily_tasks_server.src.controllers.auth.activate_email_controller import ActivateEmailController
-
+from daily_tasks_server.src.models.auth.refresh_token_model import RefreshTokenResponse, RefreshTokenRequest
 
 router = APIRouter()
 
@@ -86,7 +87,11 @@ def change_password(
 
 @router.post(
     "/refresh_token",
-    name="Refresh Token"
+    name="Refresh Token",
+    response_model=RefreshTokenResponse
 )
-async def refresh_token(token: str, db: DatabaseInterface = Depends(DatabaseSession)) -> None:
-    ...
+async def refresh_token(
+        token_request: RefreshTokenRequest,
+        db: DatabaseInterface = Depends(DatabaseSession)
+) -> RefreshTokenResponse:
+    return await RefreshTokenController().execute(token_request.token, db)
