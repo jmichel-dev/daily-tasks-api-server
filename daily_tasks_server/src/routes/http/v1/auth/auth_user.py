@@ -82,3 +82,11 @@ def change_password(
         db: DatabaseInterface = Depends(DatabaseSession)
 ) -> None:
     ChangePasswordController.execute(password_request, db)
+
+
+@router.post(
+    "/refresh_token",
+    name="Refresh Token"
+)
+async def refresh_token(token: str, db: DatabaseInterface = Depends(DatabaseSession)) -> None:
+    ...
