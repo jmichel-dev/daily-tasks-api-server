@@ -5,6 +5,7 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError
 
 from daily_tasks_server.src.models.auth.user_response_model import UserResponseModel
+from daily_tasks_server.src.services import VerityJWTTokenDatabaseService
 from daily_tasks_server.src.services.user.search_user_by_email import SearchUserByEmail
 from daily_tasks_server.src.config.database import DatabaseInterface
 from daily_tasks_server.src.config.database import DatabaseSession
@@ -32,6 +33,9 @@ def get_current_user(
         raise credentials_exception
 
     with db.get_session() as session:
+        verify_jwt_token_database_service = VerityJWTTokenDatabaseService(session)
+        verify_jwt_token_database_service.execute(token)
+
         search_user_by_email_service = SearchUserByEmail(session)
         return search_user_by_email_service.execute(email)
 
