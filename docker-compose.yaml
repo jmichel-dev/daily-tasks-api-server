@@ -1,0 +1,30 @@
+version: '3.5'
+
+services:
+  todo_db:
+    image: postgres:15.3
+    container_name: "daily-tasks-db"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/database/create_todo_database.sql:/docker-entrypoint-initdb.d/create_todo_database.sql
+      - ./docker/.postgresql-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=todo
+      - POSTGRES_PASSWORD=smartway
+      - POSTGRES_DB=todo
+  backend:
+    container_name: "daily-tasks-server"
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+      target: development
+    ports:
+      - "8000:8000"
+    depends_on:
+      - todo_db
+    network_mode: host
+
+networks:
+  default:
+    driver: bridge
