@@ -1,5 +1,6 @@
 from fastapi import BackgroundTasks
 
+from daily_tasks_server.src.config import Config
 from daily_tasks_server.src.config.database import DatabaseInterface
 from daily_tasks_server.src.services import GenerateAndSaveTokenService
 from daily_tasks_server.src.services.notification.change_password_request_notification_service import \
@@ -15,7 +16,11 @@ class ChangePasswordRequestController:
             search_user_by_email_service = SearchUserByEmail(session)
             generate_token_service = GenerateAndSaveTokenService(session)
 
-            token = generate_token_service.execute(email)
+            payload = {
+                "email": email
+            }
+            expiration_time = Config.JWT_ACTIVATE_EMAIL_TOKEN_EXPIRATION
+            token = generate_token_service.execute(payload, expiration_time)
             user = search_user_by_email_service.execute(email)
             session.commit()
 

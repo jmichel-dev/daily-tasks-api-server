@@ -94,4 +94,4 @@ async def refresh_token(
         token_request: RefreshTokenRequest,
         db: DatabaseInterface = Depends(DatabaseSession)
 ) -> RefreshTokenResponse:
-    return await RefreshTokenController().execute(token_request.token, db)
+    return await RefreshTokenController().execute(token_request, db)
