@@ -44,5 +44,6 @@ class Config:
     EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD", "password")
     EMAIL_SENDER = os.getenv("EMAIL_SENDER", "notifications@example.com")
 
-    MAIL_TEMPLATE_ACTIVATE_USER_EMAIL = os.getcwd() + "/src/templates/active_user_email.html"
-    MAIL_TEMPLATE_REQUEST_PASSWORD_EMAIL = os.getcwd() + "/src/templates/change_password_request.html"
+    MAIL_TEMPLATE_ACTIVATE_USER_EMAIL = os.getcwd() + "/daily_tasks_server/src/templates/active_user_email.html"
+    MAIL_TEMPLATE_REQUEST_PASSWORD_EMAIL = os.getcwd() + ("/daily_tasks_server/src/templates/change_password_request"
+                                                          ".html")
