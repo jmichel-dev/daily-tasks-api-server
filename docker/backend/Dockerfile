@@ -27,7 +27,7 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 
 # Import our project files
 WORKDIR $APP_PATH
-COPY ./poetry.lock ./pyproject.toml ./main.py ./
+COPY ./poetry.lock ./pyproject.toml ./
 COPY ./$APP_NAME ./$APP_NAME
 RUN touch README.md
 
@@ -42,4 +42,4 @@ ARG APP_PATH
 WORKDIR $APP_PATH
 RUN poetry install
 
-CMD ["poetry", "run", "uvicorn", "main:app", "--reload"]
+CMD ["poetry", "run", "uvicorn", "daily_tasks_server.main:app", "--reload"]
