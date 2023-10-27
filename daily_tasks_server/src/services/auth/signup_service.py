@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import bcrypt
 from psycopg2.extensions import connection
 
 from daily_tasks_server.src.entity import User
@@ -12,8 +13,8 @@ class SignupService:
         self.db_session = db_session
 
     def execute(self, user_request: UserSignupModel) -> None:
-        sql = ("INSERT INTO person(first_name, last_name, email, password, active_email, enable, created_at) VALUES("
-               "%s, %s, %s, %s, %s, %s, %s)")
+        sql = ("INSERT INTO person(first_name, last_name, email, password_salt, password, active_email, enable, "
+               "created_at) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)")
 
         user = User()
         user.change_first_name(user_request.first_name)
@@ -27,6 +28,7 @@ class SignupService:
             user.first_name,
             user.last_name,
             user.email,
+            user.password_salt.decode("utf-8"),
             user.password,
             user.active_email,
             user.enable,

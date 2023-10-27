@@ -5,6 +5,7 @@ from daily_tasks_server.src.models.auth.change_password_model import ChangePassw
 from daily_tasks_server.src.services import JWTService, VerityJWTTokenDatabaseService, DisableTokenService
 from daily_tasks_server.src.services.auth.change_password_by_email_service import ChangePasswordByEmailService
 from daily_tasks_server.src.services.auth.compare_user_password_service import CompareUserPasswordService
+from daily_tasks_server.src.services.user.search_user_database_by_email_service import SearchUserDatabaseByEmailService
 
 
 class ChangePasswordController:
@@ -15,14 +16,8 @@ class ChangePasswordController:
             payload = JWTService.verify(password_request.token)
             email = payload["payload"]["email"]
 
-            compare_user_password_service = CompareUserPasswordService(session)
-            valid_password = compare_user_password_service.execute(email, password_request.old_password)
-
-            if not valid_password:
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail="Email/password invalid"
-                )
+            search_user_database_by_email_service = SearchUserDatabaseByEmailService(session)
+            user = search_user_database_by_email_service.execute(email)
 
             verify_token_service = VerityJWTTokenDatabaseService(session)
             verify_token_service.execute(password_request.token)
@@ -31,6 +26,6 @@ class ChangePasswordController:
             disable_token_service.execute(password_request.token)
 
             change_password_service = ChangePasswordByEmailService(session)
-            change_password_service.execute(email, password_request.new_password)
+            change_password_service.execute(email, password_request.new_password, user.password_salt)
 
             session.commit()

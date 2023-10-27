@@ -5,7 +5,7 @@ from daily_tasks_server.src.entity import User
 from daily_tasks_server.src.models import UserResponseModel
 
 
-class SearchUserDatabaseByEmail:
+class SearchUserDatabaseByEmailService:
 
     def __init__(self, db_session: connection) -> None:
         self.db_session = db_session
@@ -31,9 +31,9 @@ class SearchUserDatabaseByEmail:
         first_name = output[1]
         last_name = output[2]
         email = output[3]
-        password_salt = output[4]
-        password = output[5]
-        active_email = output[6]
+        active_email = output[4]
+        password_salt = output[5]
+        password = output[6]
         enable = output[7]
         created_at = output[8]
         updated_at = output[9]

@@ -12,3 +12,8 @@ class UserResponseModel(BaseModel):
     enable: bool
     created_at: datetime
     updated_at: datetime
+
+
+class UserDatabaseModel(UserResponseModel):
+    password_salt: bytes
+    password: str
