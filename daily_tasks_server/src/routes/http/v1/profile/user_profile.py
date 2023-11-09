@@ -37,6 +37,8 @@ async def change_password(
     "/avatar",
 )
 async def upload_avatar(
+        current_user: Annotated[UserResponseModel, Depends(get_current_active_user)],
         avatar: UploadFile = File(...)
-) -> None:
-    await UpdateUserAvatarController.execute("current_user.email", avatar)
+) -> dict:
+    avatar_url = await UpdateUserAvatarController.execute(current_user.email, avatar)
+    return {"avatar_url": avatar_url}
