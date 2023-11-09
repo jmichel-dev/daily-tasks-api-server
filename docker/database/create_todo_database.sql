@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS person(
     first_name VARCHAR(80) NOT NULL,
     last_name VARCHAR(80) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
+    avatar VARCHAR,
     password_salt VARCHAR NOT NULL,
     password VARCHAR NOT NULL,
     active_email BOOL DEFAULT false,
