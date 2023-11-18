@@ -12,6 +12,7 @@ class User(Entity):
         self.__first_name = None
         self.__last_name = None
         self.__email = None
+        self.__avatar_url = None
         self.__password = None
         self.__active_email = False
         self.__enable = True
@@ -46,6 +47,13 @@ class User(Entity):
     @property
     def email(self, ) -> str:
         return self.__email
+
+    def change_avatar(self, avatar_url: str) -> None:
+        self.__avatar_url = avatar_url
+
+    @property
+    def avatar_url(self) -> str:
+        return self.__avatar_url
 
     def change_password_salt(self, password_salt: str | bytes) -> None:
         if not isinstance(password_salt, str) and not isinstance(password_salt, bytes):

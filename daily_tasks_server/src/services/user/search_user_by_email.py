@@ -20,6 +20,7 @@ class SearchUserByEmail:
             last_name=user.last_name,
             email=user.email,
             active_email=user.active_email,
+            avatar_url=user.avatar_url,
             enable=user.enable,
             created_at=user.created_at,
             updated_at=user.updated_at,

@@ -11,8 +11,8 @@ class SearchUserDatabaseByEmailService:
         self.db_session = db_session
 
     def execute(self, email: str) -> User:
-        sql = ("SELECT id,first_name,last_name,email,active_email,password_salt,password,enable,created_at,updated_at "
-               "FROM person WHERE email=%s")
+        sql = ("SELECT id,first_name,last_name,email,avatar,active_email,password_salt,password,enable,created_at,"
+               "updated_at FROM person WHERE email=%s")
         data = (email,)
 
         cursor = self.db_session.cursor()
@@ -31,18 +31,20 @@ class SearchUserDatabaseByEmailService:
         first_name = output[1]
         last_name = output[2]
         email = output[3]
-        active_email = output[4]
-        password_salt = output[5]
-        password = output[6]
-        enable = output[7]
-        created_at = output[8]
-        updated_at = output[9]
+        avatar_url = output[4]
+        active_email = output[5]
+        password_salt = output[6]
+        password = output[7]
+        enable = output[8]
+        created_at = output[9]
+        updated_at = output[10]
 
         user = User()
         user.change_uid(uid)
         user.change_first_name(first_name)
         user.change_last_name(last_name)
         user.change_email(email)
+        user.change_avatar(avatar_url)
         user.change_password_salt(password_salt)
         user.encrypted_password(password)
         user.change_active_email(active_email)
