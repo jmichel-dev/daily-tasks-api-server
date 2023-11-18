@@ -9,7 +9,7 @@ class UserResponseModel(BaseModel):
     last_name: str
     email: str
     active_email: bool
-    avatar_url: str
+    avatar_url: str | None = None
     enable: bool
     created_at: datetime
     updated_at: datetime
