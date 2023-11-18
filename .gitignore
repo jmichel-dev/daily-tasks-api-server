@@ -30,7 +30,10 @@ archive.zip
 .DS_Store
 
 # app
-.env
+.env.dev
+.env.prd
+.env.dev
+.env.uat
 .postgresql-data
 TODO.md
 notes.txt

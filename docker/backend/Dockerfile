@@ -43,3 +43,18 @@ WORKDIR $APP_PATH
 RUN poetry install
 
 CMD ["poetry", "run", "uvicorn", "daily_tasks_server.main:app", "--reload"]
+
+#
+# Stage: production
+#
+FROM staging as production
+ARG APP_NAME
+ARG APP_PATH
+
+WORKDIR $APP_PATH
+RUN poetry install
+
+ENV PORT=5000
+ENV APP_NAME=$APP_NAME
+
+CMD ["poetry", "run", "uvicorn", "--port", "5000", "daily_tasks_server.main:app"]

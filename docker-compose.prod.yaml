@@ -14,41 +14,9 @@ services:
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
       - POSTGRES_DB=${DATABASE_NAME}
-  backend_dev:
-    container_name: "daily-tasks-server-dev"
-    image: "daily-tasks-server-backend-dev:${APP_VERSION}"
-    build:
-      context: .
-      dockerfile: ./docker/backend/Dockerfile
-      target: development
-    ports:
-      - "8000:8000"
-    volumes:
-      - "./daily_tasks_server:/opt/daily_tasks_server/daily_tasks_server"
-    depends_on:
-      - todo_db
-    environment:
-      - DATABASE_USER=${DATABASE_USER}
-      - DATABASE_NAME=${DATABASE_NAME}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - DATABASE_HOST=${DATABASE_HOST}
-      - DATABASE_PORT=${DATABASE_PORT}
-      - EMAIL_HOST=${EMAIL_HOST}
-      - EMAIL_PORT=${EMAIL_PORT}
-      - EMAIL_LOGIN=${EMAIL_LOGIN}
-      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
-      - EMAIL_SENDER=${EMAIL_SENDER}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_ALGORITHM=${JWT_ALGORITHM}
-      - JWT_EXPIRATION_TIME_IN_SECONDS=${JWT_EXPIRATION_TIME_IN_SECONDS}
-      - JWT_REFRESH_TOKEN_EXPIRATION_IN_DAYS=${JWT_REFRESH_TOKEN_EXPIRATION_IN_DAYS}
-      - JWT_ACCESS_TOKEN_EXPIRATION_IN_MINUTES=${JWT_ACCESS_TOKEN_EXPIRATION_IN_MINUTES}
-      - AWS_REGION=${AWS_REGION}
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-    network_mode: host
   backend_prd:
     container_name: "daily-tasks-server-prd"
+    image: "daily-tasks-server-backend:${APP_VERSION}"
     build:
       context: .
       dockerfile: ./docker/backend/Dockerfile
