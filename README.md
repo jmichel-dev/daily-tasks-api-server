@@ -55,4 +55,4 @@ docker compose -f docker-compose.prod.yaml --env-file .env.prod up --build
 
 - The difference between dev and prod is that in development mode the server is running in hot reload. So, you are able to change your code and the FastAPI will automatically apply the changes
 
-- In production mode, you can check if the server is running in the link http://localhost:5000
+- In production mode, you can check if the server is running on http://localhost:5000/docs
